@@ -12,6 +12,9 @@ export default function HomePage() {
           <span className="font-display text-lg text-sage-800">Outskill Invoice</span>
         </div>
         <div className="flex gap-3">
+          <Link href="/demo" className="hidden px-4 py-2 text-sm text-sage-600 transition-colors hover:text-sage-800 sm:inline-flex">
+            Demo
+          </Link>
           <Link href="/login" className="px-4 py-2 text-sm text-sage-600 transition-colors hover:text-sage-800">
             Sign in
           </Link>
@@ -37,12 +40,20 @@ export default function HomePage() {
           Built for kirana stores and Indian micro-businesses.
         </p>
 
-        <Link
-          href="/signup"
-          className="rounded-xl bg-sage-500 px-8 py-4 text-lg font-medium text-white transition-all hover:bg-sage-600 hover:shadow-lg hover:shadow-sage-200 active:scale-95"
-        >
-          Start for free
-        </Link>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <Link
+            href="/demo"
+            className="rounded-xl bg-sage-700 px-8 py-4 text-lg font-medium text-white transition-all hover:bg-sage-800 hover:shadow-lg hover:shadow-sage-200 active:scale-95"
+          >
+            View demo
+          </Link>
+          <Link
+            href="/signup"
+            className="rounded-xl border border-sage-200 bg-white px-8 py-4 text-lg font-medium text-sage-700 transition-all hover:bg-sage-50 active:scale-95"
+          >
+            Start for free
+          </Link>
+        </div>
 
         <p className="mt-4 text-sm text-gray-400">No credit card required</p>
 

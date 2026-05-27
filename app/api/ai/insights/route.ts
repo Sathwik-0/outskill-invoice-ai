@@ -29,9 +29,24 @@ export async function GET() {
 
     const stats = { totalPending: all.filter(i => i.status === 'pending').length, totalPaid: all.filter(i => i.status === 'paid').length, overdueCount, dueToday, pendingAmount, paidThisMonth, weeklyChange };
 
-    const insight = await generateInsight(stats);
+    const insight = await withTimeout(generateInsight(stats), 12000).catch(() => ({
+      insight: stats.overdueCount > 0
+        ? `${stats.overdueCount} invoices need payment follow-up today.`
+        : `${stats.totalPending} invoices are being monitored by AI.`,
+      action: stats.overdueCount > 0
+        ? 'Send WhatsApp reminders before evening collection hours.'
+        : 'Upload new invoices to keep the ledger current.',
+      urgency: stats.overdueCount > 0 ? 'high' : 'low',
+    }));
     return NextResponse.json({ data: { stats, insight }, error: null });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('Insight generation timed out')), ms);
+    promise.then(resolve).catch(reject).finally(() => clearTimeout(timer));
+  });
 }
