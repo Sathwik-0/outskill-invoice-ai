@@ -1,6 +1,6 @@
+import { Bell, MessageSquare, Sparkles } from 'lucide-react';
 import { createClient } from '@/lib/supabase/server';
-import { formatDate, formatRelativeDate, formatCurrency } from '@/lib/utils/helpers';
-import { MessageSquare, Bell } from 'lucide-react';
+import ReminderCard from '@/components/reminders/ReminderCard';
 
 export default async function RemindersPage() {
   const supabase = await createClient();
@@ -14,54 +14,41 @@ export default async function RemindersPage() {
     .limit(30);
 
   const all = reminders ?? [];
+  const businessName = (user?.user_metadata?.business_name as string) || 'Your Business';
 
   return (
     <div className="space-y-6 animate-fade-up">
-      <div>
-        <h1 className="font-display text-3xl text-sage-900">Reminders</h1>
-        <p className="text-gray-500 mt-1 text-sm">{all.length} reminder{all.length !== 1 ? 's' : ''} generated</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="font-display text-3xl text-sage-900">Reminders</h1>
+          <p className="mt-1 text-sm text-gray-500">
+            {all.length} WhatsApp-ready follow-up{all.length !== 1 ? 's' : ''} generated
+          </p>
+        </div>
+        <div className="inline-flex w-fit items-center gap-2 rounded-full border border-sage-100 bg-white px-3 py-2 text-xs font-semibold text-sage-700 shadow-sm">
+          <Sparkles size={14} />
+          AI tone optimized
+        </div>
       </div>
 
       {all.length === 0 ? (
-        <div className="bg-white border border-sage-100 rounded-2xl text-center py-16">
-          <Bell size={36} className="text-gray-200 mx-auto mb-3" />
-          <p className="text-sm text-gray-400">No reminders yet</p>
-          <p className="text-xs text-gray-300 mt-1">Reminders are auto-generated when you upload invoices</p>
+        <div className="rounded-2xl border border-dashed border-sage-200 bg-white p-8 text-center shadow-sm shadow-sage-100/60 sm:py-16">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-sage-50 text-sage-500">
+            <Bell size={28} />
+          </div>
+          <p className="text-sm font-semibold text-sage-900">No reminders yet</p>
+          <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-gray-500">
+            Upload your first invoice and Outskill will generate a polite WhatsApp payment follow-up automatically.
+          </p>
+          <div className="mx-auto mt-5 flex max-w-sm items-center justify-center gap-2 rounded-xl bg-sage-50 px-4 py-3 text-xs text-sage-700">
+            <MessageSquare size={14} />
+            Demo moment: generated reminder appears here as an editable chat preview.
+          </div>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="grid gap-4">
           {all.map(reminder => (
-            <div key={reminder.id} className="bg-white border border-sage-100 rounded-xl p-5">
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <div className="flex items-center gap-2">
-                  <MessageSquare size={15} className="text-amber-500 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <div className="text-sm font-medium text-gray-800">
-                      {(reminder.invoice as { customer_name: string })?.customer_name ?? 'Unknown'}
-                    </div>
-                    <div className="text-xs text-gray-400 mt-0.5">
-                      {formatCurrency((reminder.invoice as { amount: number })?.amount ?? 0)} · {formatRelativeDate(reminder.created_at)}
-                    </div>
-                  </div>
-                </div>
-                <span className={`text-xs px-2 py-1 rounded-full font-medium capitalize ${
-                  reminder.status === 'sent' ? 'bg-sage-100 text-sage-700' :
-                  reminder.status === 'failed' ? 'bg-red-100 text-red-700' :
-                  'bg-amber-100 text-amber-700'
-                }`}>
-                  {reminder.status}
-                </span>
-              </div>
-
-              {/* Message preview */}
-              <div className="bg-sage-50 border border-sage-100 rounded-lg px-4 py-3 text-sm text-gray-700 leading-relaxed">
-                {reminder.message}
-              </div>
-
-              <div className="flex items-center gap-1.5 mt-3">
-                <span className="text-xs text-gray-400 uppercase tracking-wide font-medium">{reminder.channel}</span>
-              </div>
-            </div>
+            <ReminderCard key={reminder.id} reminder={reminder} businessName={businessName} />
           ))}
         </div>
       )}

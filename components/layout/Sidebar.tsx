@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Receipt, BookOpen, Bell, LogOut } from 'lucide-react';
+import { LayoutDashboard, Receipt, BookOpen, Bell, LogOut, Settings } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { cn } from '@/lib/utils/helpers';
 import type { User } from '@supabase/supabase-js';
@@ -11,6 +11,7 @@ const NAV = [
   { href: '/invoices', label: 'Invoices', Icon: Receipt },
   { href: '/ledger', label: 'Ledger', Icon: BookOpen },
   { href: '/reminders', label: 'Reminders', Icon: Bell },
+  { href: '/settings', label: 'Settings', Icon: Settings },
 ];
 
 export default function Sidebar({ user }: { user: User }) {
@@ -26,6 +27,7 @@ export default function Sidebar({ user }: { user: User }) {
   const businessName = (user.user_metadata?.business_name as string) || user.email?.split('@')[0] || 'My Business';
 
   return (
+    <>
     <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 bg-white border-r border-sage-100 px-4 py-6 z-10">
       {/* Brand */}
       <div className="flex items-center gap-2.5 px-2 mb-8">
@@ -82,5 +84,28 @@ export default function Sidebar({ user }: { user: User }) {
         </button>
       </div>
     </aside>
+    <nav className="fixed inset-x-3 bottom-3 z-40 rounded-2xl border border-sage-100 bg-white/95 px-2 py-2 shadow-lg shadow-sage-200/70 backdrop-blur md:hidden">
+      <div className="grid grid-cols-5 gap-1">
+        {NAV.map(({ href, label, Icon }) => {
+          const active = pathname === href || pathname.startsWith(href + '/');
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                'flex min-h-12 flex-col items-center justify-center gap-1 rounded-xl text-[10px] font-medium transition-all',
+                active
+                  ? 'bg-sage-50 text-sage-700'
+                  : 'text-gray-400 hover:bg-gray-50 hover:text-gray-700'
+              )}
+            >
+              <Icon size={17} />
+              <span className="max-w-full truncate">{label}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+    </>
   );
 }

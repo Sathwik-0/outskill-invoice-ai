@@ -20,6 +20,22 @@
 }
 
 @layer utilities {
+  .profile-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .profile-input:focus {
+    border-color: #a8c3a8;
+    box-shadow: 0 0 0 3px rgba(168, 195, 168, 0.28);
+  }
+
   .shimmer-bg {
     background: linear-gradient(90deg, #e6ede6 25%, #cddccd 50%, #e6ede6 75%);
     background-size: 400% 100%;

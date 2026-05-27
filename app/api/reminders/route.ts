@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     if (invoiceError || !invoice) return NextResponse.json({ error: 'Invoice not found' }, { status: 404 });
 
-    const { message } = await generateReminder(invoice);
+    const { message } = await generateReminder(invoice, user.user_metadata ?? {});
 
     const { data: reminder, error } = await supabase
       .from('reminders')

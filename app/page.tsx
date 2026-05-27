@@ -1,63 +1,63 @@
 import Link from 'next/link';
+import { Bot, Camera, MessageSquare } from 'lucide-react';
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-cream-50 flex flex-col">
-      {/* Nav */}
-      <nav className="px-6 py-4 flex items-center justify-between max-w-6xl mx-auto w-full">
+    <main className="flex min-h-screen flex-col bg-cream-50">
+      <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-sage-500 rounded-lg flex items-center justify-center">
-            <span className="text-white text-sm font-bold">O</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sage-500">
+            <span className="text-sm font-bold text-white">O</span>
           </div>
           <span className="font-display text-lg text-sage-800">Outskill Invoice</span>
         </div>
         <div className="flex gap-3">
-          <Link href="/login" className="text-sm text-sage-600 hover:text-sage-800 px-4 py-2 transition-colors">
+          <Link href="/login" className="px-4 py-2 text-sm text-sage-600 transition-colors hover:text-sage-800">
             Sign in
           </Link>
-          <Link href="/signup" className="text-sm bg-sage-500 text-white px-4 py-2 rounded-lg hover:bg-sage-600 transition-colors">
+          <Link href="/signup" className="rounded-lg bg-sage-500 px-4 py-2 text-sm text-white transition-colors hover:bg-sage-600">
             Get started
           </Link>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-20">
-        <div className="inline-flex items-center gap-2 bg-sage-100 text-sage-700 text-xs font-medium px-3 py-1.5 rounded-full mb-8 border border-sage-200">
-          <span className="w-1.5 h-1.5 bg-sage-500 rounded-full animate-pulse"></span>
+      <section className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
+        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-sage-200 bg-sage-100 px-3 py-1.5 text-xs font-medium text-sage-700">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage-500" />
           AI-powered bookkeeping for Indian businesses
         </div>
 
-        <h1 className="font-display text-5xl md:text-7xl text-sage-900 leading-tight max-w-3xl mb-6">
+        <h1 className="mb-6 max-w-3xl font-display text-5xl leading-tight text-sage-900 md:text-7xl">
           Invoice management
           <span className="italic text-sage-500"> quietly automated</span>
         </h1>
 
-        <p className="text-lg text-gray-500 max-w-xl mb-10 leading-relaxed">
-          Upload an invoice. Our AI extracts, categorizes, and follows up — automatically. 
+        <p className="mb-10 max-w-xl text-lg leading-relaxed text-gray-500">
+          Upload an invoice. AI extracts, files, updates the ledger, and prepares WhatsApp follow-ups automatically.
           Built for kirana stores and Indian micro-businesses.
         </p>
 
         <Link
           href="/signup"
-          className="bg-sage-500 text-white px-8 py-4 rounded-xl text-lg font-medium hover:bg-sage-600 transition-all hover:shadow-lg hover:shadow-sage-200 active:scale-95"
+          className="rounded-xl bg-sage-500 px-8 py-4 text-lg font-medium text-white transition-all hover:bg-sage-600 hover:shadow-lg hover:shadow-sage-200 active:scale-95"
         >
-          Start for free →
+          Start for free
         </Link>
 
-        <p className="text-sm text-gray-400 mt-4">No credit card required</p>
+        <p className="mt-4 text-sm text-gray-400">No credit card required</p>
 
-        {/* Feature hints */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-20 max-w-3xl w-full">
+        <div className="mt-16 grid w-full max-w-3xl grid-cols-1 gap-4 md:grid-cols-3">
           {[
-            { emoji: '📸', title: 'Upload invoice', desc: 'Photo or PDF — AI reads everything' },
-            { emoji: '🤖', title: 'AI extracts & files', desc: 'Amount, customer, category — automatic' },
-            { emoji: '💬', title: 'Smart reminders', desc: 'WhatsApp follow-ups generated instantly' },
-          ].map((f) => (
-            <div key={f.title} className="bg-white/70 border border-sage-100 rounded-xl p-5 text-left">
-              <div className="text-2xl mb-3">{f.emoji}</div>
-              <div className="font-medium text-sage-800 mb-1">{f.title}</div>
-              <div className="text-sm text-gray-500">{f.desc}</div>
+            { Icon: Camera, title: 'Upload invoice', desc: 'Photo or PDF. AI reads the details.' },
+            { Icon: Bot, title: 'AI extracts and files', desc: 'Amount, customer, category, and due date.' },
+            { Icon: MessageSquare, title: 'Smart reminders', desc: 'WhatsApp follow-ups generated instantly.' },
+          ].map(({ Icon, title, desc }) => (
+            <div key={title} className="rounded-xl border border-sage-100 bg-white/75 p-5 text-left shadow-sm shadow-sage-100/60">
+              <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-sage-50 text-sage-600">
+                <Icon size={18} />
+              </div>
+              <div className="mb-1 font-medium text-sage-800">{title}</div>
+              <div className="text-sm leading-relaxed text-gray-500">{desc}</div>
             </div>
           ))}
         </div>

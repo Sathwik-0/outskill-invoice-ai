@@ -3,7 +3,7 @@ import { Toaster } from 'sonner';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Outskill Invoice — AI Bookkeeping for Indian Businesses',
+  title: 'Outskill Invoice - AI Bookkeeping for Indian Businesses',
   description: 'Automated invoice management and payment follow-ups for kirana stores and micro-businesses.',
 };
 
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-sans antialiased bg-cream-50 text-gray-900">
+      <body className="bg-cream-50 font-sans text-gray-900 antialiased">
         {children}
         <Toaster
           position="top-right"

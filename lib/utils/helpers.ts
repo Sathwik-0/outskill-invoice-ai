@@ -15,7 +15,7 @@ export function formatCurrency(amount: number, currency = 'INR'): string {
 }
 
 export function formatDate(dateStr: string | null): string {
-  if (!dateStr) return '—';
+  if (!dateStr) return '-';
   return new Intl.DateTimeFormat('en-IN', {
     day: 'numeric',
     month: 'short',
@@ -62,9 +62,9 @@ export function getStatusLabel(status: InvoiceStatus): string {
 }
 
 export function truncate(str: string, n: number): string {
-  return str.length > n ? str.slice(0, n - 1) + '…' : str;
+  return str.length > n ? `${str.slice(0, n - 1)}...` : str;
 }
 
 export function sleep(ms: number): Promise<void> {
-  return new Promise(r => setTimeout(r, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
