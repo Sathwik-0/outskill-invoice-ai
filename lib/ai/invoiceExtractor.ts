@@ -1,4 +1,3 @@
-```typescript
 import { callGroqJSON } from '@/lib/ai/groq';
 import { AIExtractedData } from '@/types';
 
@@ -20,7 +19,6 @@ export async function extractInvoiceData(
   return {
     customer_name: result.customer_name ?? 'Unknown Customer',
     amount: typeof result.amount === 'number' ? result.amount : 0,
-    // CHANGED HERE: Fallback to undefined instead of null to match AIExtractedData type
     due_date: result.due_date ?? undefined,
     invoice_number: result.invoice_number ?? undefined,
     category: result.category ?? 'Other',
@@ -32,4 +30,3 @@ export async function extractInvoiceData(
 export async function extractFromText(text: string): Promise<AIExtractedData> {
   return extractInvoiceData(text);
 }
-```
